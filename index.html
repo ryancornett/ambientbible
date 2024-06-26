@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Ambient.Bible</title>
+        <link rel="icon" type="image/x-icon" href="./assets/icons/icon.png" />
+        <meta name="description" content="Play Bible audio with ambient background sounds, and read along as well.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="keywords" content="Bible, audio, ambient, ambiance, nature, background, Scripture, Berean Standard Bible, King James Version">
+        <meta name="author" content="Ryan Cornett">
+        <meta property="og:image" content="https://lofi.bible/assets/icons/icon.png">
+        <link rel="stylesheet" href="styles.css">
+    </head>
+
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-FE0QT25F0E"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-FE0QT25F0E');
+    </script> -->
+
+    <body>
+        <div class="background"></div>
+
+        <div class="app">
+            
+            <div class="left" id="top">
+                <audio id="bible-player"></audio>
+                
+                <div class="translation-picker" title="Toggle translation">
+                    <span id="kjv">KJV</span>
+                    <span> / </span>
+                    <span id="bsb" class="selected">BSB</span>
+                </div>
+
+                <div class="selector">
+                    <select id="book-selector"></select>
+                    <select id="chapter-selector"></select>
+                </div>
+
+                <div id="timer">00:00 / 00:00</div>
+
+                <div class="interactive-controls">
+                    <img src="assets/icons/restart.webp" title="Restart chapter" class="restart" alt="Restart" />
+                    <span id="playback-rate-selector" title="Change speed">1.00x</span>
+                    <img src="assets/icons/sun.webp" title="Toggle light/dark Bible text" class="switcher" alt="Change text theme" />
+                </div>
+
+                <div class="play-controls">
+                    <img src="assets/icons/previous.webp" class="previous-next previous" alt="Previous" />
+                    <img src="assets/icons/play.webp" class="play-pause" alt="Play or pause" />
+                    <img src="assets/icons/next.webp" class="previous-next next" alt="Next" />
+                </div>
+                
+                <div class="sounds-container">
+                    <div class="sounds-info">
+                        <span><img src="assets/icons/beats.webp" id="link-icon" alt="Link icon" /></span>
+                        <div class="track-info">
+                            <div class="sounds-selector" title="Choose sounds">
+                                <select id="sounds">
+                                    <option selected disabled>--press play--</option>
+                                </select>
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="sounds-volume-wrapper">
+                        <label for="sounds-volume"><img onclick="handleQuickMute" id="sounds-volume-icon" src="assets/icons/medium.webp" alt="Volume icon" /></label>
+                        <input type="range" id="sounds-volume" min="0" max="0.8" step="0.02" value="0.26" />
+                    </div>
+                    
+                </div>
+            </div>
+
+            <article class="chapter-container"></article>
+
+        </div>
+        
+        <footer>
+            <div class="adaptive-play-menu">
+                <div class="adaptive-play-controls">
+                    <img src="assets/icons/restart.webp" class="restart" alt="Restart" />
+                    <img src="assets/icons/play.webp" class="play-pause" alt="Play or pause" />
+                    <a href="#top"><img src="assets/icons/to-top.webp" class="previous-next next" alt="Back to top" /></a>
+                </div>
+            </div>
+            <h1>Ambient.Bible</h1>
+            
+            <div class="info-icon-wrapper">
+                <img src="assets/icons/info.webp" id="info-clickable" class="footer-icon" alt="About the site" title="About the site" />
+            </div>
+            <a href="https://ko-fi.com/ryancornett" target="_blank">
+                <img src="assets/icons/heart.webp" class="footer-icon" alt="Support the site" title="Support the site" />
+            </a>
+            <a href="https://forms.gle/JbcHRkfrXrzoyhVC9" target="_blank">
+                <img src="assets/icons/contact.webp" class="footer-icon" alt="Leave feedback" title="Leave feedback" />
+            </a>
+            <a href="https://x.com/lofibiblehymns" target="_blank">
+                <img src="assets/icons/x.png" class="footer-icon small" alt="Twitter/X link" title="Twitter/X link" />
+            </a>
+        </footer>
+
+        <dialog id="info-modal">
+            <div class="modal-wrapper">
+                <div id="close-info">
+                    <img src="assets/icons/close.webp" alt="Close"/>
+                </div>
+                
+                <p class="fs-0-9">Play Bible audio with ambient background sounds, and read along as well!</p>
+                <p class="italicize fs-0-75">We are aware of errors in how Bible text is sometimes displayed and are corresponding with the API developers for fixes. We apologize for the inconvenience.</p>
+
+                <h4 class="mb-lowered">Offering the King James makes sense...</h4>
+                <h4 class="attention">But why the Berean Standard Bible?</h4>
+                <p class="fs-0-9">The Berean Standard Bible (BSB) is in the public domain and licensing is not required. The BSB is free to share--there is no limit to how many verses/chapters may be distributed or what percentage of a work the words of the BSB may make up.</p>
+                <p class="fs-0-9">Since 60% of the world's languages do not have a translation that may be freely shared, such openness with God's Word should be appreciated and encouraged.</p>
+                
+                <h4 class="mb-lowered attention">Bible Audio</h4>
+                <h5 class="mb-lowered">BSB</h5>
+                <p class="fs-0-9">Read by Bob Souer. <a href="https://biblehub.com/audio/downloads.htm" target="_blank" class="footer-link">Source.</a></p>
+                <h5 class="mb-lowered">KJV</h5>
+                <p class="fs-0-9">Read by Dan Wagner. <a href="https://www.mp3bible.ca/" target="_blank" class="footer-link">Source.</a></p>
+                <p class="fs-0-9">Audio Scriptures International <a href="https://github.com/ryancornett/Bible_Audio/raw/main/Audio_Scriptures_International_Copyright_Info.mp3" alt="Download audio tag" class="footer-link">copyright audio tag</a> (transcript below)</p>
+                <p class="italicize fs-0-9">"Thank you for listening to this recording of the King James Bible produced by Audio Scriptures International. Audio Scriptures International believes it is more important to spread the Word of God than to make a large profit. Please feel free to make copies of these recordings and distribute them freely so long as you adhere to the following guidelines:</p>
+                <ol>
+                    <li class="italicize fs-0-9">You may not charge any more than the cost to duplicate and send them.</li>
+                    <li class="italicize fs-0-9">You must make a complete copy of the recording, including this message.</li>
+                </ol>
+                <p class="italicize fs-0-9">For commercial and fund raising distribution, please contact Audio Scriptures International for additional information."</p>
+
+                <p class="fs-0-75">Site by <a href="https://linktr.ee/ryancornett" class="footer-link" target="_blank">Ryan Cornett</a></p>
+                
+            </div>
+
+            
+        </dialog>
+
+        <script src="scripts/app.js" type="module" async defer></script>
+    </body>
+</html>
